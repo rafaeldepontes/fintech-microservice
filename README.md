@@ -30,6 +30,8 @@ Gateway is running on the 8080 port, it's redirecting everything to the Eureka's
 
 ---
 
+Register a new client
+
 - POST - `api/v1/clients`
 
   - **Request Body:**:
@@ -46,6 +48,8 @@ Gateway is running on the 8080 port, it's redirecting everything to the Eureka's
     `http://localhost:{port}/api/v1/clients?cpf={cpf}`
 
 ---
+
+List a client by his Cpf
 
 - GET - `api/v1/clients?cpf={...}`
 
@@ -68,6 +72,8 @@ Gateway is running on the 8080 port, it's redirecting everything to the Eureka's
 
 ---
 
+Register a new card to a client
+
 - POST - `api/v1/cards`
 
   - **Request Body:**:
@@ -86,6 +92,8 @@ Gateway is running on the 8080 port, it's redirecting everything to the Eureka's
 
 ---
 
+List all the cards from a client by their income
+
 - GET - `api/v1/cards?income={...}`
 
   - **Output:**
@@ -98,6 +106,26 @@ Gateway is running on the 8080 port, it's redirecting everything to the Eureka's
           "name": "string",
           "brand": "string",
           "income": "decimal",
+          "limit": "decimal"
+        }
+      ]
+    }
+    ```
+
+---
+
+List all the cards from a client by the client Cpf
+
+- GET - `api/v1/cards?cpf={...}`
+
+  - **Output:**
+
+    ```json
+    {
+      "cards": [
+        {
+          "name": "string",
+          "brand": "string",
           "limit": "decimal"
         }
       ]
