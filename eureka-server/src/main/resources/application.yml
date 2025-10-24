@@ -11,3 +11,4 @@ eureka:
     # itself and the other one is the job of the gateway...
     register-with-eureka: false
     fetch-registry: false
+    
