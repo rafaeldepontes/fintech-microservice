@@ -103,8 +103,8 @@ List all the cards from a client by their income
       {
         "id": "long",
         "name": "string",
-        "brand": "string",
-        "income": "decimal",
+        "brand": "string", //Can only be: mastercard, visa, discover or american express
+        "income": "long",
         "limit": "decimal"
       }
     ]
