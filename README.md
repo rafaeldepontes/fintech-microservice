@@ -16,13 +16,15 @@ Using Keycloak, RabbitMQ, Eureka Server, and a few other technologies, I plan to
     - Api Gateway
     - Load Balancer (eurekas...)
 
-## Services
+# Services
 
-### Api Gateway
+## Api Gateway
 
 Gateway is running on the 8080 port, it's redirecting everything to the Eureka's LB, so if you want to communicate with the system... first run the eureka server and then run the gateway AND THEN you can test the application.
 
-### Client Service
+---
+
+## Client Service
 
 - GET - `api/v1/clients/health-check`
   - **Output:**
@@ -30,28 +32,24 @@ Gateway is running on the 8080 port, it's redirecting everything to the Eureka's
 
 ---
 
-Register a new client
+- Register a new client - `api/v1/clients`
 
-- POST - `api/v1/clients`
+  - **Request Body:**
 
-  - **Request Body:**:
-
-  ```json
-  {
-    "name": "string",
-    "age": "int",
-    "cpf": "string" // the cpf field is the Brazilian ID..
-  }
-  ```
+    ```json
+    {
+      "name": "string",
+      "age": "int",
+      "cpf": "string" // the cpf field is the Brazilian ID..
+    }
+    ```
 
   - **Output:**
     `http://localhost:{port}/api/v1/clients?cpf={cpf}`
 
 ---
 
-List a client by his Cpf
-
-- GET - `api/v1/clients?cpf={...}`
+- List a client by his Cpf - `api/v1/clients?cpf={...}`
 
   - **Output:**
 
@@ -64,7 +62,7 @@ List a client by his Cpf
     }
     ```
 
-### Cards Service
+## Cards Service
 
 - GET - `api/v1/cards/health-check`
   - **Output:**
@@ -72,9 +70,7 @@ List a client by his Cpf
 
 ---
 
-Register a new card to a client
-
-- POST - `api/v1/cards`
+- Register a new card to a client `api/v1/cards`
 
   - **Request Body:**:
 
@@ -92,9 +88,7 @@ Register a new card to a client
 
 ---
 
-List all the cards from a client by their income
-
-- GET - `api/v1/cards?income={...}`
+- List all the cards from a client by their income - `api/v1/cards?income={...}`
 
   - **Output:**
 
@@ -112,9 +106,7 @@ List all the cards from a client by their income
 
 ---
 
-List all the cards from a client by the client Cpf
-
-- GET - `api/v1/cards?cpf={...}`
+- List all the cards from a client by the client Cpf - `api/v1/cards?cpf={...}`
 
   - **Output:**
 
