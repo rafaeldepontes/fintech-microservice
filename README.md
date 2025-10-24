@@ -18,9 +18,19 @@ Using Keycloak, RabbitMQ, Eureka Server, and a few other technologies, I plan to
 
 ## Services
 
+### Api Gateway
+
+Gateway is running on the 8080 port, it's redirecting everything to the Eureka's LB, so if you want to communicate with the system... first run the eureka server and then run the gateway AND THEN you can test the application.
+
 ### Client Service
 
-- POST - `api/v1/clients
+- GET - `api/v1/clients/health-check`
+  - **Output:**
+    `ok`
+
+---
+
+- POST - `api/v1/clients`
 
   - **Request Body:**:
 
@@ -32,6 +42,11 @@ Using Keycloak, RabbitMQ, Eureka Server, and a few other technologies, I plan to
   }
   ```
 
+  - **Output:**
+    `http://localhost:{port}/api/v1/clients?cpf={cpf}`
+
+---
+
 - GET - `api/v1/clients?cpf={...}`
 
   - **Output:**
@@ -42,5 +57,49 @@ Using Keycloak, RabbitMQ, Eureka Server, and a few other technologies, I plan to
       "name": "string",
       "age": "int",
       "cpf": "string"
+    }
+    ```
+
+### Cards Service
+
+- GET - `api/v1/cards/health-check`
+  - **Output:**
+    `ok`
+
+---
+
+- POST - `api/v1/cards`
+
+  - **Request Body:**:
+
+  ```json
+  {
+    "name": "string",
+    "brand": "string",
+    "income": "decimal",
+    "limit": "decimal"
+  }
+  ```
+
+  - **Output:**
+    `HttpStatus 201 - Created`
+
+---
+
+- GET - `api/v1/cards?income={...}`
+
+  - **Output:**
+
+    ```json
+    {
+      "cards": [
+        {
+          "id": "long",
+          "name": "string",
+          "brand": "string",
+          "income": "decimal",
+          "limit": "decimal"
+        }
+      ]
     }
     ```
