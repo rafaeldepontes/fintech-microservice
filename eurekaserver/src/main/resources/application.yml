@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: "discover-server"
+
+server:
+  port: 8761
+
+eureka:
+  client:
+    # This 2 configs is needed because one is for eureka not register 
+    # itself and the other one is the job of the gateway...
+    register-with-eureka: false
+    fetch-registry: false
