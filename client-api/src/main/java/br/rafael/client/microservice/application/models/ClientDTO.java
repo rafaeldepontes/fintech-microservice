@@ -1,4 +1,4 @@
-package br.rafael.client.api.application.models;
+package br.rafael.client.microservice.application.models;
 
 import lombok.Builder;
 import lombok.Data;

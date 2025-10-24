@@ -1,4 +1,4 @@
-package br.rafael.client.api;
+package br.rafael.client.microservice.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package br.rafael.client.api.domain;
+package br.rafael.client.microservice.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

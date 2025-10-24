@@ -1,4 +1,4 @@
-package br.rafael.client.api.application;
+package br.rafael.client.microservice.interfaces;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.rafael.client.api.application.models.ClientDTO;
-import br.rafael.client.api.application.services.ClientService;
+import br.rafael.client.microservice.application.models.ClientDTO;
+import br.rafael.client.microservice.application.services.ClientService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.PostMapping;

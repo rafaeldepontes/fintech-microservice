@@ -1,11 +1,11 @@
-package br.rafael.client.api.infra.repository;
+package br.rafael.client.microservice.domain.infra.repository;
 
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import br.rafael.client.api.domain.Client;
+import br.rafael.client.microservice.domain.Client;
 
 
 @Repository
