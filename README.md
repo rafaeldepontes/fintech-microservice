@@ -99,17 +99,15 @@ List all the cards from a client by their income
   - **Output:**
 
     ```json
-    {
-      "cards": [
-        {
-          "id": "long",
-          "name": "string",
-          "brand": "string",
-          "income": "decimal",
-          "limit": "decimal"
-        }
-      ]
-    }
+    [
+      {
+        "id": "long",
+        "name": "string",
+        "brand": "string",
+        "income": "decimal",
+        "limit": "decimal"
+      }
+    ]
     ```
 
 ---
