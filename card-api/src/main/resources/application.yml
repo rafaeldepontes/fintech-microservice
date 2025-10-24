@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: "card-api"
+
+server:
+  # When port is "0", it will run the application on a random port,
+  # so that I don't need to manage every single instance port...
+  port: 0
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    # Didn't know about this, but you can use ${} to get the spring
+    # properties inside the application.yml or .properties
+    # this is basically saying "card-api:123-456"
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
