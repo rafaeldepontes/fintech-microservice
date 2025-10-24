@@ -16,7 +16,6 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
 @RestController
 @RequestMapping("api/v1/clients")
 @Log4j2
@@ -24,6 +23,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class ClientController {
 
     private final ClientService service;
+
+    @GetMapping("/health-check")
+    @ResponseStatus(value = HttpStatus.OK)
+    public String healthCheck() {
+        log.info("Server ok!");
+        return "Ok!";
+    }
 
     @GetMapping
     @ResponseStatus(value = HttpStatus.OK)
@@ -43,7 +49,5 @@ public class ClientController {
             .toUri();
 
         return ResponseEntity.created(uri).build();
-    }
-    
-
+    }  
 }
