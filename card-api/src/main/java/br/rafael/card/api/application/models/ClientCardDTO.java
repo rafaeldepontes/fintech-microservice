@@ -11,6 +11,6 @@ public class ClientCardDTO {
     
     private String name;
     private String brand;
-    private BigDecimal limit; 
+    private BigDecimal approvedLimit; 
 
 }

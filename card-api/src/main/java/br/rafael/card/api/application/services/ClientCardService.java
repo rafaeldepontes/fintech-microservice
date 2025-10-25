@@ -36,7 +36,7 @@ public class ClientCardService {
                     .builder()
                     .name(cc.getName())
                     .brand(cc.getBrand().toString())
-                    .limit(cc.getIncomeLimit())
+                    .approvedLimit(cc.getIncomeLimit())
                     .build(); 
                 clientCardsDTOs.add(clientCardDTO);
             });
