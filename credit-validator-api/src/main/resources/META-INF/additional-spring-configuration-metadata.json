@@ -1,0 +1,14 @@
+{
+  "properties": [
+    {
+      "name": "clients.card.service.url",
+      "type": "java.lang.String",
+      "description": "URL for the cards microservice"
+    },
+    {
+      "name": "clients.client.service.url",
+      "type": "java.lang.String",
+      "description": "URL for the clients microservice"
+    }
+  ]
+}

@@ -16,3 +16,13 @@ eureka:
     # properties inside the application.yml or .properties
     # this is basically saying "credit-validator-api:123-456"
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+# Feign Client
+clients:
+  card:
+    service:
+      url: http://localhost:8080/api/v1/cards
+  client:
+    service:
+      url: http://localhost:8080/api/v1/clients
+    
