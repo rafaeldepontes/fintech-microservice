@@ -24,14 +24,14 @@ public class ClientController {
 
     private final ClientService service;
 
-    @GetMapping("/health-check")
+    @GetMapping
     @ResponseStatus(value = HttpStatus.OK)
     public String healthCheck() {
-        log.info("Server ok!");
-        return "Ok!";
+        log.info("Server is running fine");
+        return "Ok";
     }
 
-    @GetMapping
+    @GetMapping(params = "cpf")
     @ResponseStatus(value = HttpStatus.OK)
     public ClientDTO findByCpf(@RequestParam String cpf) {
         return service.findByCpf(cpf);
