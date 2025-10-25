@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class ClientCard {
+public class ClientCardDTO {
     
     private String name;
     private String brand;

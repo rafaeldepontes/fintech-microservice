@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.rafael.card.api.application.models.CardDTO;
-import br.rafael.card.api.application.models.ClientCard;
 import br.rafael.card.domain.Card;
 import br.rafael.card.domain.enums.CardBrand;
 import br.rafael.card.infra.repository.CardRepository;
@@ -59,15 +58,4 @@ public class CardService {
 
         return cardsDTO;
     }
-
-    // WIP
-    public List<ClientCard> findByCpf(String cpf) {
-        log.info("[INFO] Listing cards by their owner's cpf: {}", cpf);
-        
-
-        List<ClientCard> clientCards = new ArrayList<>();
-
-        return clientCards;
-    }
-
 }

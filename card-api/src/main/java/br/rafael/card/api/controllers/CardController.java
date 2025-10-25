@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.rafael.card.api.application.models.CardDTO;
 import br.rafael.card.api.application.services.CardService;
+import br.rafael.card.api.application.services.ClientCardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -22,7 +23,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Log4j2
 public class CardController {
     
-    private final CardService service;
+    private final CardService cardService;
+    private final ClientCardService clientService;
 
     @GetMapping
     @ResponseStatus(value = HttpStatus.OK)
@@ -32,18 +34,18 @@ public class CardController {
     }
 
     @GetMapping(params = "income")
-    public ResponseEntity<?> getMethodName(@RequestParam Long income) {
-        return ResponseEntity.ok(service.findByIncome(income));
+    public ResponseEntity<?> findByIncome(@RequestParam Long income) {
+        return ResponseEntity.ok(cardService.findByIncome(income));
     }
 
     @GetMapping(params = "cpf")
     public ResponseEntity<?> findByCpf(@RequestParam String cpf) {
-        return ResponseEntity.ok(service.findByCpf(cpf));
+        return ResponseEntity.ok(clientService.findByCpf(cpf));
     }
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
     public void register(@RequestBody CardDTO cardDto) {
-        service.create(cardDto);
+        cardService.create(cardDto);
     }
 }

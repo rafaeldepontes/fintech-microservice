@@ -5,13 +5,17 @@ import java.math.BigDecimal;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import br.rafael.card.domain.enums.CardBrand;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -44,5 +48,10 @@ public class Card {
 
     @Column
     private BigDecimal incomeLimit;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_client_card")
+    private Client client;
+
 
 }
