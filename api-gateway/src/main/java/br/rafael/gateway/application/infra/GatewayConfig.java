@@ -14,7 +14,12 @@ public class GatewayConfig {
             .routes()
                 .route(r -> r
                     .path("/api/v1/clients", "/api/v1/clients/**")
-                    .uri("lb://client-api"))
+                    .uri("lb://client-api")
+                )
+                .route(r -> r
+                    .path("/api/v1/cards", "/api/v1/cards/**")
+                    .uri("lb://card-api")
+                )
             .build();
     }
 
