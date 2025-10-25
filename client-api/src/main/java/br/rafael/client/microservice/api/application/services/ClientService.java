@@ -1,11 +1,11 @@
-package br.rafael.client.microservice.application.services;
+package br.rafael.client.microservice.api.application.services;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.rafael.client.microservice.application.models.ClientDTO;
+import br.rafael.client.microservice.api.application.models.ClientDTO;
 import br.rafael.client.microservice.domain.Client;
-import br.rafael.client.microservice.domain.infra.repository.ClientRepository;
+import br.rafael.client.microservice.infra.repository.ClientRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 

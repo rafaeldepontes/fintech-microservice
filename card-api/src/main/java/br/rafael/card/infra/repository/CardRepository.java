@@ -1,4 +1,4 @@
-package br.rafael.card.domain.infra.repository;
+package br.rafael.card.infra.repository;
 
 import java.util.List;
 

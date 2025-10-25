@@ -1,10 +1,10 @@
-package br.rafael.card.interfaces;
+package br.rafael.card.api.controllers;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.rafael.card.application.models.CardDTO;
-import br.rafael.card.application.services.CardService;
+import br.rafael.card.api.application.models.CardDTO;
+import br.rafael.card.api.application.services.CardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 

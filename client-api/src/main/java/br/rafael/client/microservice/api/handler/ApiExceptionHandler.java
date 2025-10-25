@@ -1,4 +1,4 @@
-package br.rafael.client.microservice.interfaces.handler;
+package br.rafael.client.microservice.api.handler;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

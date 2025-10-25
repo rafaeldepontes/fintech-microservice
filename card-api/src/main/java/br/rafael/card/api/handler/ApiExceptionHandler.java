@@ -1,4 +1,4 @@
-package br.rafael.card.interfaces.handler;
+package br.rafael.card.api.handler;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

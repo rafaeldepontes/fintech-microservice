@@ -1,4 +1,4 @@
-package br.rafael.card.application.services;
+package br.rafael.card.api.application.services;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -7,11 +7,11 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.rafael.card.application.models.CardDTO;
-import br.rafael.card.application.models.ClientCard;
+import br.rafael.card.api.application.models.CardDTO;
+import br.rafael.card.api.application.models.ClientCard;
 import br.rafael.card.domain.Card;
 import br.rafael.card.domain.enums.CardBrand;
-import br.rafael.card.domain.infra.repository.CardRepository;
+import br.rafael.card.infra.repository.CardRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 

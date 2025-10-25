@@ -1,4 +1,4 @@
-package br.rafael.client.microservice.domain.infra.repository;
+package br.rafael.client.microservice.infra.repository;
 
 import java.util.Optional;
 

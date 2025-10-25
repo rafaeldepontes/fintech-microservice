@@ -1,4 +1,4 @@
-package br.rafael.card.application.models;
+package br.rafael.card.api.application.models;
 
 import java.math.BigDecimal;
 
