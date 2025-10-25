@@ -4,7 +4,7 @@ Using Keycloak, RabbitMQ, Eureka Server, and a few other technologies, I plan to
 
 ## System Design
 
-<img src="images/System Design.png" style="width: 50%">
+<img src="images/System_Design.png" style="width: 50%">
 
 ## Technologies
 
@@ -88,7 +88,7 @@ Gateway is running on the 8080 port, it's redirecting everything to the Eureka's
 
 ---
 
-- List all the cards from a client by their income - `api/v1/cards?income={...}`
+- List all the cards available that their income is less or equal to the "income" param - `api/v1/cards?income={...}`
 
   - **Output:**
 
