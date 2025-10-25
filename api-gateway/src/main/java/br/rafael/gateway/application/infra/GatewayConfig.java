@@ -20,6 +20,10 @@ public class GatewayConfig {
                     .path("/api/v1/cards", "/api/v1/cards/**")
                     .uri("lb://card-api")
                 )
+                .route(r -> r
+                    .path("/api/v1/credit-validate", "/api/v1/credit-validate/**")
+                    .uri("lb://credit-validator-api")
+                )
             .build();
     }
 
