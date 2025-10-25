@@ -1,5 +1,6 @@
 package br.rafael.creditvalidator.api.application.services;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,31 +43,33 @@ public class CreditValidatorService {
 
     @SuppressWarnings("null")
     public List<Card> findAllCardsAvailable(ClientStatusInfo clientStatusInfo) {
-        final List<Card> cards = new ArrayList<>();
+        List<Card> cards = new ArrayList<>();
         
         log.info("[INFO] Listing client by cpf: {}", clientStatusInfo.getCpf());
-        var responseCardsByCpf = cardClient.findByCpf(clientStatusInfo.getCpf()).getBody();
-
-        if (!CreditValidatorUtils.isNullOrEmpty(responseCardsByCpf)) {
-            responseCardsByCpf.stream().map(cards::add);
-            responseCardsByCpf = null;
-        }
+        var client = clientClient.findByCpf(clientStatusInfo.getCpf());
 
         log.info("[INFO] Listing client by income: {}", clientStatusInfo.getIncome().toString());
         List<CardDTO> responseCardsByIncome = cardClient.findByIncome(clientStatusInfo.getIncome().longValue()).getBody();
 
         if (!CreditValidatorUtils.isNullOrEmpty(responseCardsByIncome)) {
-            responseCardsByIncome.stream().forEach(cDto -> {
+            cards = responseCardsByIncome.stream().map(cDto -> {
+
+                final BigDecimal basicLimit = cDto.getLimit();
+                final BigDecimal age = BigDecimal.valueOf(client.getAge());
+                final BigDecimal factor = age.divide(BigDecimal.TEN);
+
+                final BigDecimal approvedLimit = factor.multiply(basicLimit);
+
                 final Card card = Card
                     .builder()
+                    .id(cDto.getId())
                     .name(cDto.getName())
                     .brand(cDto.getBrand())
-                    .approvedLimit(cDto.getLimit())
+                    .approvedLimit(approvedLimit)
                     .build();
 
-                cards.add(card);
-            });
-            responseCardsByIncome = null;
+                return card;
+            }).toList();
         }
 
         return cards;

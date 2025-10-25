@@ -9,6 +9,7 @@ import lombok.Data;
 @Builder
 public class Card {
     
+    private Long id;
     private String name;
     private String brand;
     private BigDecimal approvedLimit;
