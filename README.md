@@ -28,7 +28,7 @@ Gateway is running on the 8080 port, it's redirecting everything to the Eureka's
 
 - GET - `api/v1/clients`
   - **Output:**
-    `ok`
+    `Ok`
 
 ---
 
@@ -66,7 +66,7 @@ Gateway is running on the 8080 port, it's redirecting everything to the Eureka's
 
 - GET - `api/v1/cards`
   - **Output:**
-    `ok`
+    `Ok`
 
 ---
 
@@ -124,7 +124,7 @@ Gateway is running on the 8080 port, it's redirecting everything to the Eureka's
 
 - GET - `api/v1/credit-validate`
   - **Output:**
-    `ok`
+    `Ok`
 
 ---
 
@@ -137,15 +137,12 @@ Gateway is running on the 8080 port, it's redirecting everything to the Eureka's
       "client": {
         "id": "long",
         "name": "string",
-        "age": "int",
-        "cpf": "string"
       },
       "cards": [
         {
-          "id": "long",
           "name": "string",
           "brand": "string",
-          "limit": "decimal"
+          "approvedLimit": "decimal"
         }
       ]
     }
