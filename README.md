@@ -70,7 +70,7 @@ Gateway is running on the 8080 port, it's redirecting everything to the Eureka's
 
 ---
 
-- Register a new card to a client - `api/v1/cards`
+- Register a new card - `api/v1/cards`
 
   - **Request Body:**
 
