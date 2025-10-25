@@ -33,10 +33,12 @@ public class ClientService {
     @Transactional(readOnly = true)
     public ClientDTO findByCpf(String cpf) {
         log.info("[INFO] Searching for client's cpf: {}", cpf);
-        final Client client = repository.findByCpf(cpf).orElseThrow(() -> {
+        final Client client = repository.findByCpf(cpf).orElse(null);
+
+        if (client == null) {
             log.error("[ERROR] Client not found, cpf: {}", cpf);
-            throw new RuntimeException("Client not found");
-        });
+            return ClientDTO.builder().build();
+        }
         
         log.info("[INFO] Client found - {}", client.toString());
         return ClientDTO
