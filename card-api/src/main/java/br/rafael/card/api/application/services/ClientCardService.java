@@ -22,15 +22,17 @@ public class ClientCardService {
 
     @Transactional(readOnly = true)
     public List<ClientCardDTO> findByCpf(String cpf) {
-        log.info("[INFO] Listing cards by their owner's cpf: {}", cpf);
-        Client client = repository.findByCpf(cpf).orElseThrow(() -> {
-            log.error("[ERROR] No client found by cpf: {}", cpf);
-            throw new RuntimeException("Client not found");
-        });
-
         List<ClientCardDTO> clientCardsDTOs = new ArrayList<>();
 
-        if (CardUtils.isNullOrEmpty(client.getCards())) {
+        log.info("[INFO] Listing cards by their owner's cpf: {}", cpf);
+        Client client = repository.findByCpf(cpf).orElse(null);
+
+        if (client == null) {
+            log.error("[ERROR] No client found by cpf: {}", cpf);
+            return clientCardsDTOs;
+        }
+
+        if (!CardUtils.isNullOrEmpty(client.getCards())) {
             client.getCards().stream().forEach(cc -> {
                 final ClientCardDTO clientCardDTO = ClientCardDTO
                     .builder()
