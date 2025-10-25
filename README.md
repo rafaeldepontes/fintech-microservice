@@ -14,7 +14,7 @@ Using Keycloak, RabbitMQ, Eureka Server, and a few other technologies, I plan to
     - Eureka Server
     - RabbitMQ
     - Api Gateway
-    - Load Balancer (eurekas...)
+    - Load Balancer (eureka server LB...)
 
 # Services
 
@@ -26,7 +26,7 @@ Gateway is running on the 8080 port, it's redirecting everything to the Eureka's
 
 ## Client Service
 
-- GET - `api/v1/clients/health-check`
+- GET - `api/v1/clients`
   - **Output:**
     `ok`
 
@@ -49,7 +49,7 @@ Gateway is running on the 8080 port, it's redirecting everything to the Eureka's
 
 ---
 
-- List a client by his Cpf - `api/v1/clients?cpf={...}`
+- List a client by his cpf - `api/v1/clients?cpf={...}`
 
   - **Output:**
 
@@ -64,24 +64,24 @@ Gateway is running on the 8080 port, it's redirecting everything to the Eureka's
 
 ## Cards Service
 
-- GET - `api/v1/cards/health-check`
+- GET - `api/v1/cards`
   - **Output:**
     `ok`
 
 ---
 
-- Register a new card to a client `api/v1/cards`
+- Register a new card to a client - `api/v1/cards`
 
-  - **Request Body:**:
+  - **Request Body:**
 
-  ```json
-  {
-    "name": "string",
-    "brand": "string",
-    "income": "decimal",
-    "limit": "decimal"
-  }
-  ```
+    ```json
+    {
+      "name": "string",
+      "brand": "string", //Can only be: mastercard, visa, discover or american express
+      "income": "decimal",
+      "limit": "decimal"
+    }
+    ```
 
   - **Output:**
     `HttpStatus 201 - Created`
@@ -97,7 +97,7 @@ Gateway is running on the 8080 port, it's redirecting everything to the Eureka's
       {
         "id": "long",
         "name": "string",
-        "brand": "string", //Can only be: mastercard, visa, discover or american express
+        "brand": "string",
         "income": "long",
         "limit": "decimal"
       }
@@ -111,13 +111,91 @@ Gateway is running on the 8080 port, it's redirecting everything to the Eureka's
   - **Output:**
 
     ```json
+    [
+      {
+        "name": "string",
+        "brand": "string",
+        "limit": "decimal"
+      }
+    ]
+    ```
+
+## Credit Validator Service
+
+- GET - `api/v1/credit-validate`
+  - **Output:**
+    `ok`
+
+---
+
+- Checks the client status by their cpf - `api/v1/credit-validate?cpf={...}`
+
+  - **Output:**
+
+    ```json
     {
+      "client": {
+        "id": "long",
+        "name": "string",
+        "age": "int",
+        "cpf": "string"
+      },
       "cards": [
         {
+          "id": "long",
           "name": "string",
           "brand": "string",
           "limit": "decimal"
         }
       ]
     }
+    ```
+
+---
+
+- Validate to see if a client is available to a new card or cards - `api/v1/credit-validate`
+
+  - **Request Body:**
+
+    ```json
+    {
+      "cpf": "string",
+      "income": "decimal"
+    }
+    ```
+
+  - **Output:**
+
+    ```json
+    [
+      {
+        "name": "string",
+        "brand": "string",
+        "approvedLimit": "decimal"
+      }
+    ]
+    ```
+
+---
+
+- Register a card to a client - `api/v1/credit-validate`
+
+  - **Request Body:**
+
+    ```json
+    {
+      "cardId": "long",
+      "cpf": "string",
+      "address": "string"
+    }
+    ```
+
+  - **Output:**
+
+    ```json
+    [
+      {
+        "protocol": "string"
+      }
+    ]
     ```
