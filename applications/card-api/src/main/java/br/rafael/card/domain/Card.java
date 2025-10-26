@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import br.rafael.card.domain.enums.CardBrand;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -49,9 +48,8 @@ public class Card {
     @Column
     private BigDecimal incomeLimit;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_client_card")
     private Client client;
-
 
 }

@@ -40,4 +40,6 @@ public class Client {
     
     private BigDecimal incomeLimit;
 
+    private String address;
+
 }

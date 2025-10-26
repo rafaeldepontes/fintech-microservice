@@ -13,5 +13,4 @@ public class ValidateCreditApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ValidateCreditApplication.class, args);
 	}
-
 }

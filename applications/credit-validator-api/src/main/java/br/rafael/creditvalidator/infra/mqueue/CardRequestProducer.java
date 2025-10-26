@@ -2,7 +2,6 @@ package br.rafael.creditvalidator.infra.mqueue;
 
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -21,7 +20,6 @@ public class CardRequestProducer {
     private final Queue queue;
     private final ObjectMapper objectMapper;
 
-    @Bean
     public void sendMessage(ClientCardRequest clientCardRequest) throws JsonProcessingException {
         var json = objectMapper.writeValueAsString(clientCardRequest);
         log.info("[INFO] Card Request serialization completed, {}", json);
