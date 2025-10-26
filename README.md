@@ -162,7 +162,8 @@ All services expose endpoints under `/api/v1` and are routed through the API Gat
     {
       "cardId": 10,
       "cpf": "000.000.000-00",
-      "address": "Street, City, Country"
+      "address": "Street, City, Country",
+      "approvedLimit": 1500.0
     }
     ```
 
