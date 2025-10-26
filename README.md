@@ -178,6 +178,14 @@ All services expose endpoints under `/api/v1` and are routed through the API Gat
 
 ---
 
+### RabbitMQ
+
+- A queue named `card-issuance-requests` is used to handle card issuance requests asynchronously.
+
+- The Exchanege used is `card-issuance-exchange` of type `direct` or `topic`, depending on the routing needs.
+
+---
+
 ## Example `curl` requests
 
 Register a client:
