@@ -1,0 +1,19 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3.10.5-management
+    hostname: rabbitmq
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      # I'm not gonna use a .env to this configs
+      # but is expected that you use it, so be careful.
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: pass
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq/mnesia/rabbitmq@my-rabbit
+      - rabbitmq_log:/var/log/rabbitmq
+volumes:
+  rabbitmq_data:
+  rabbitmq_log:
