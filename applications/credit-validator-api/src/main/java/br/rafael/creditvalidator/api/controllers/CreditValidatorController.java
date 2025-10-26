@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import br.rafael.creditvalidator.api.application.models.ClientCardRequest;
 import br.rafael.creditvalidator.api.application.models.ClientStatusInfo;
 import br.rafael.creditvalidator.api.application.services.CreditValidatorService;
@@ -40,11 +42,10 @@ public class CreditValidatorController {
         return ResponseEntity.ok(service.findAllCardsAvailable(clientStatusInfo));
     }
 
-    // @PostMapping("/card")
-    // public String registerCardToClient(@RequestBody ClientCardRequest clientCardRequest) {
-        
-    //     return entity;
-    // }
+    @PostMapping("/register")
+    public Object registerCardToClient(@RequestBody ClientCardRequest clientCardRequest) throws JsonProcessingException {
+        return service.sendCardRequest(clientCardRequest);
+    }
     
     
 

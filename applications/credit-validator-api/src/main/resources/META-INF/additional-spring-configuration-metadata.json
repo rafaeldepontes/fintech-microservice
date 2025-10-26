@@ -9,6 +9,16 @@
       "name": "clients.client.service.url",
       "type": "java.lang.String",
       "description": "URL for the clients microservice"
+    },
+    {
+      "name": "mq.exchanges.card-issuance-exchange",
+      "type": "java.lang.String",
+      "description": "The Exchange name for RabbitMQ"
+    },
+    {
+      "name": "mq.queues.card-issuance-request",
+      "type": "java.lang.String",
+      "description": "Queue names for RabbitMQ"
     }
   ]
 }
