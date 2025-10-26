@@ -4,7 +4,7 @@ Using Keycloak, RabbitMQ, Eureka Server, and a few other technologies, I plan to
 
 ## System Design
 
-<img src="docs/images/System_Design.png" style="width: 50%">
+![alt text](docs/images/System_Design.png)
 
 ## Technologies
 
