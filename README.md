@@ -1,198 +1,239 @@
-# Fake-Fintech-Microservice
+# Fake Fintech Microservice
 
-Using Keycloak, RabbitMQ, Eureka Server, and a few other technologies, I plan to build a fully functional FINTECH application! I hope you like what you see!
+> A small fintech microservices demo: Keycloak, Eureka, RabbitMQ, API Gateway, and a few Spring services wired to simulate card issuance and client credit validation.
+
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](#)
+[![Build](https://img.shields.io/badge/build-pending-lightgrey)](#)
+
+---
+
+## Overview
+
+This repository contains a toy, but realistic, fintech microservice ecosystem meant for learning and experimentation. It demonstrates:
+
+- service discovery with **Eureka**
+- API gateway routing
+- authentication with **Keycloak**
+- asynchronous communication with **RabbitMQ**
+- inter-service communication with **Spring Cloud OpenFeign**
+- dockerized local development using **Docker Compose**
+
+The goal is to be a practical playground for concepts like service-to-service calls, token-based security, message-based integration, and simple domain logic: clients, cards and credit validation.
+
+---
 
 ## System Design
 
-![alt text](docs/images/System_Design.png)
-
-## Technologies
-
-    - Java 21
-    - Spring Boot 3.5.7
-    - Swagger
-    - Eureka Server
-    - RabbitMQ
-    - Api Gateway
-    - Load Balancer (eureka server LB...)
-
-# Services
-
-## Api Gateway
-
-Gateway is running on the 8080 port, it's redirecting everything to the Eureka's LB, so if you want to communicate with the system... first run the eureka server and then run the gateway AND THEN you can test the application.
+![System Design](docs/images/System_Design.png)
 
 ---
 
-## Client Service
+## Tech stack
 
-- GET - `api/v1/clients`
-  - **Output:**
-    `Ok`
+- Java 21
+- Maven
+- Spring Boot v3.5.7
+- Spring Cloud v2025.0.0
+- Spring Cloud OpenFeign
+- Eureka Server
+- Keycloak
+- RabbitMQ v3.10.management
+- Lombok
+- Docker & Docker Compose
 
 ---
 
-- Register a new client - `api/v1/clients`
+## Services & API (quick reference)
 
-  - **Request Body:**
+All services expose endpoints under `/api/v1` and are routed through the API Gateway (default port `8080`). When running locally, start Eureka first, then Gateway, then the other services (Be aware that if you start the gateway first, it will need some time to communicate with the other services, so wait for a few seconds before using the application).
+
+### Client Service
+
+- **GET** `/api/v1/clients`
+
+  - Returns: `200 OK` — simple health/list placeholder
+
+- **POST** `/api/v1/clients`
+
+  - Request body:
 
     ```json
     {
       "name": "string",
-      "age": "int",
-      "cpf": "string" // the cpf field is the Brazilian ID..
+      "age": 30,
+      "cpf": "000.000.000-00"
     }
     ```
 
-  - **Output:**
-    `http://localhost:{port}/api/v1/clients?cpf={cpf}`
+  - Response: `201 Created`
+  - Location header example: `http://localhost:{port}/api/v1/clients?cpf={cpf}`
 
----
+- **GET** `/api/v1/clients?cpf={cpf}`
 
-- List a client by his cpf - `api/v1/clients?cpf={...}`
-
-  - **Output:**
+  - Response body:
 
     ```json
     {
-      "id": "long",
+      "id": 1,
       "name": "string",
-      "age": "int",
-      "cpf": "string"
+      "age": 30,
+      "cpf": "000.000.000-00"
     }
     ```
 
-## Cards Service
-
-- GET - `api/v1/cards`
-  - **Output:**
-    `Ok`
-
 ---
 
-- Register a new card - `api/v1/cards`
+### Cards Service
 
-  - **Request Body:**
+- **GET** `/api/v1/cards`
+
+  - Returns: `200 OK` — health or list placeholder
+
+- **POST** `/api/v1/cards`
+
+  - Request body:
 
     ```json
     {
-      "name": "string",
-      "brand": "string", //Can only be: mastercard, visa, discover or american express
-      "income": "decimal",
-      "limit": "decimal"
+      "name": "Gold Card",
+      "brand": "VISA", // allowed: MASTERCARD | VISA | DISCOVER | AMERICAN_EXPRESS
+      "income": 5000.0,
+      "limit": 1200.0
     }
     ```
 
-  - **Output:**
-    `HttpStatus 201 - Created`
+  - Response: `201 Created`
+
+- **GET** `/api/v1/cards?income={income}`
+
+  - Returns a list of cards suitable for the provided income (cards where `card.income <= income`).
+
+- **GET** `/api/v1/cards?cpf={cpf}`
+
+  - Returns cards associated with a client (name, brand, limit)
 
 ---
 
-- List all the cards available that their income is less or equal to the "income" param - `api/v1/cards?income={...}`
+### Credit Validator Service
 
-  - **Output:**
+- **GET** `/api/v1/credit-validate`
 
-    ```json
-    [
-      {
-        "id": "long",
-        "name": "string",
-        "brand": "string",
-        "income": "long",
-        "limit": "decimal"
-      }
-    ]
-    ```
+  - Returns: `200 OK` — health or placeholder
 
----
+- **GET** `/api/v1/credit-validate?cpf={cpf}`
 
-- List all the cards from a client by the client Cpf - `api/v1/cards?cpf={...}`
-
-  - **Output:**
-
-    ```json
-    [
-      {
-        "name": "string",
-        "brand": "string",
-        "limit": "decimal"
-      }
-    ]
-    ```
-
-## Credit Validator Service
-
-- GET - `api/v1/credit-validate`
-  - **Output:**
-    `Ok`
-
----
-
-- Checks the client status by their cpf - `api/v1/credit-validate?cpf={...}`
-
-  - **Output:**
+  - Returns client summary and card recommendations:
 
     ```json
     {
       "client": {
-        "id": "long",
-        "name": "string"
+        "id": 1,
+        "name": "Jane Doe"
       },
       "cards": [
         {
-          "name": "string",
-          "brand": "string",
-          "approvedLimit": "decimal"
+          "id": 1,
+          "name": "Gold Card",
+          "brand": "VISA",
+          "approvedLimit": 1000.0
         }
       ]
     }
     ```
 
----
+- **POST** `/api/v1/credit-validate` (validate for new card)
 
-- Validate to see if a client is available to a new card or cards - `api/v1/credit-validate`
-
-  - **Request Body:**
+  - Request body:
 
     ```json
     {
-      "cpf": "string",
-      "income": "decimal"
+      "cpf": "000.000.000-00",
+      "income": 4000.0
     }
     ```
 
-  - **Output:**
+  - Response: list of recommended cards with approved limits
 
-    ```json
-    [
-      {
-        "name": "string",
-        "brand": "string",
-        "approvedLimit": "decimal"
-      }
-    ]
-    ```
+- **POST** `/api/v1/credit-validate/register` (register a card to a client)
 
----
-
-- Register a card to a client - `api/v1/credit-validate`
-
-  - **Request Body:**
+  - Request body:
 
     ```json
     {
-      "cardId": "long",
-      "cpf": "string",
-      "address": "string"
+      "cardId": 10,
+      "cpf": "000.000.000-00",
+      "address": "Street, City, Country"
     }
     ```
 
-  - **Output:**
+  - Response example:
 
     ```json
-    [
-      {
-        "protocol": "string"
-      }
-    ]
+    {
+      "protocol": "2025-10-26-ABC123"
+    }
     ```
+
+  - Produces an asynchronous event to RabbitMQ and returns a registration protocol/receipt.
+
+---
+
+## Example `curl` requests
+
+Register a client:
+
+```bash
+curl -X POST http://localhost:8080/api/v1/clients \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Jane Doe","age":34,"cpf":"000.000.000-00"}'
+```
+
+Validate credit:
+
+```bash
+curl -X POST http://localhost:8080/api/v1/credit-validate \
+  -H "Content-Type: application/json" \
+  -d '{"cpf":"000.000.000-00","income":4000.00}'
+```
+
+Register card to client:
+
+```bash
+curl -X POST http://localhost:8080/api/v1/credit-validate/register \
+  -H "Content-Type: application/json" \
+  -d '{"cardId":10,"cpf":"000.000.000-00","address":"Av. Example, 123"}'
+```
+
+---
+
+## Prerequisites & Local setup
+
+1. Install Docker & Docker Compose
+2. Optionally, you can Install Java 21 and Maven if you want to run services locally without containers
+
+### Running with Docker Compose
+
+- `docker compose up --build`
+
+### Running services locally
+
+1. Start **Eureka** (run server module)
+2. Start **Gateway** (it depends on Eureka)
+3. Start remaining services (Client, Cards, Credit Validator)
+4. Start **Keycloak** and configure realm + clients if you want to test secured endpoints
+5. Start **RabbitMQ**
+
+---
+
+## Environment variables (example)
+
+- `EUREKA_SERVER_URL` — e.g. `http://localhost:8761/eureka`
+- `SPRING_PROFILES_ACTIVE` — dev, docker, etc.
+- `KEYCLOAK_URL` — base URL for Keycloak
+- `RABBITMQ_HOST`, `RABBITMQ_PORT`, `RABBITMQ_USER`, `RABBITMQ_PASS`
+
+---
+
+## License
+
+MIT — see `LICENSE` file.
