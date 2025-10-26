@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "mq.queues.card-issuance-request",
+      "type": "java.lang.String",
+      "description": "Queue names for RabbitMQ"
+    }
+  ]
+}

@@ -1,6 +1,11 @@
 spring:
   application:
     name: "card-api"
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: user
+    password: pass
 
 server:
   # When port is "0", it will run the application on a random port,
@@ -16,3 +21,7 @@ eureka:
     # properties inside the application.yml or .properties
     # this is basically saying "card-api:123-456"
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+mq:
+  queues:
+    card-issuance-request: "card-issuance-request"
