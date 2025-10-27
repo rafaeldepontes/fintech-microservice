@@ -1,14 +1,18 @@
 spring:
   application:
     name: "discover-server"
-
+  security:
+    user:
+      name: "custom-eureka-user"
+      password: "password" # This should have a real password, but this is a POC so I will use a simpler one
 server:
   port: 8761
 
 eureka:
   client:
-    # This 2 configs is needed because one is for eureka not register 
+    # This 2 configs is needed because one is for eureka not register
     # itself and the other one is the job of the gateway...
     register-with-eureka: false
     fetch-registry: false
-    
+    service-url:
+      defaultZone: http://custom-eureka-user:password@localhost:8761/eureka/
