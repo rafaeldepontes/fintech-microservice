@@ -187,6 +187,17 @@ All services expose endpoints under `/api/v1` and are routed through the API Gat
 
 ---
 
+### Keycloak
+
+- Secures endpoints using OAuth2 / OpenID Connect.
+- Default realm: `fintech-realm`
+- Default client: `fintech-client`
+- Users can be created in Keycloak for testing secured endpoints.
+
+port: `8081`
+
+---
+
 ## Example `curl` requests
 
 Register a client:
