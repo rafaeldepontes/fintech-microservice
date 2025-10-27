@@ -19,3 +19,14 @@ eureka:
     # properties inside the application.yml or .properties
     # this is basically saying "client-api:123-456"
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - "*"
+
+logging:
+  file:
+    name: ./logs/log-file.log

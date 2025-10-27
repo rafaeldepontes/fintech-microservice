@@ -36,3 +36,14 @@ mq:
     card-issuance-exchange: "card-issuance-exchange"
   queues:
     card-issuance-request: "card-issuance-request"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - "*"
+
+logging:
+  file:
+    name: ./logs/log-file.log
