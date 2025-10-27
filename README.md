@@ -45,7 +45,7 @@ The goal is to be a practical playground for concepts like service-to-service ca
 
 ## Services & API (quick reference)
 
-All services expose endpoints under `/api/v1` and are routed through the API Gateway (default port `8080`). When running locally, start Eureka first, then Gateway, then the other services (Be aware that if you start the gateway first, it will need some time to communicate with the other services, so wait for a few seconds before using the application).
+All services expose endpoints under `/api/v1` and are routed through the API Gateway (default port `8080`). When running locally, start the docker first, then Eureka, then Gateway, then the other services (Be aware that if you start the gateway first, it will need some time to communicate with the other services, so wait for a few seconds before using the application).
 
 ### Client Service
 
