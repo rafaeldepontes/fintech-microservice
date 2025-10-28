@@ -62,6 +62,35 @@ And the Eureka server is available at `http://localhost:8761` but it's protected
 }
 ```
 
+Also for some services working properly, you will need to have RabbitMQ running at `localhost:5672` with the credentials.
+
+```json
+{
+  "user": "user",
+  "password": "pass"
+}
+```
+
+And also create the necessary exchange and queue in RabbitMQ:
+
+- Exchange: `card-issuance-exchange` (type: direct)
+- Queue: `card-issuance-request`
+
+And for Keycloak, you can access the admin console at `http://localhost:8080` with the following credentials:
+
+```json
+{
+  "user": "admin",
+  "password": "admin"
+}
+```
+
+and import the realm configuration from the `docs/keycloak/realm-export.json` file.
+
+If you had done all the steps above, you should be able to use the services as described below.
+
+But if not, just stop the services and start them again using `docker compose up --build` command.
+
 ### Client Service
 
 - **GET** `/api/v1/clients`
@@ -196,7 +225,7 @@ And the Eureka server is available at `http://localhost:8761` but it's protected
 
 ### RabbitMQ
 
-- A queue named `card-issuance-requests` is used to handle card issuance requests asynchronously.
+- A queue named `card-issuance-request` is used to handle card issuance requests asynchronously.
 
 - The Exchanege used is `card-issuance-exchange` of type `direct` or `topic`, depending on the routing needs.
 
