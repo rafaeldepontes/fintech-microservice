@@ -49,7 +49,7 @@ The goal is to be a practical playground for concepts like service-to-service ca
 
 ## Services & API (quick reference)
 
-All services expose endpoints under `/api/v1` and are routed through the API Gateway (default port `8081`). When running locally, start the docker first, then Eureka, then Gateway, then the other services (Be aware that if you start the gateway first, it will need some time to communicate with the other services, so wait for a few seconds before using the application).
+All services expose endpoints under `/api/v1` and are routed through the API Gateway (default port `8080`). When running locally, start the docker first, then Eureka, then Gateway, then the other services (Be aware that if you start the gateway first, it will need some time to communicate with the other services, so wait for a few seconds before using the application).
 
 Also note that all services are secured with Keycloak, so you will need to obtain a valid access token to call the endpoints.
 
@@ -76,7 +76,7 @@ And also create the necessary exchange and queue in RabbitMQ:
 - Exchange: `card-issuance-exchange` (type: direct)
 - Queue: `card-issuance-request`
 
-And for Keycloak, you can access the admin console at `http://localhost:8080` with the following credentials:
+And for Keycloak, you can access the admin console at `http://localhost:8081` with the following credentials:
 
 ```json
 {
@@ -247,7 +247,7 @@ port: `8081`
 Register a client:
 
 ```bash
-curl -X POST http://localhost:8081/api/v1/clients \
+curl -X POST http://localhost:8080/api/v1/clients \
   -H "Content-Type: application/json" \
   -d '{"name":"Jane Doe","age":34,"cpf":"000.000.000-00"}'
 ```
@@ -255,7 +255,7 @@ curl -X POST http://localhost:8081/api/v1/clients \
 Validate credit:
 
 ```bash
-curl -X POST http://localhost:8081/api/v1/credit-validate \
+curl -X POST http://localhost:8080/api/v1/credit-validate \
   -H "Content-Type: application/json" \
   -d '{"cpf":"000.000.000-00","income":4000.00}'
 ```
@@ -263,7 +263,7 @@ curl -X POST http://localhost:8081/api/v1/credit-validate \
 Register card to client:
 
 ```bash
-curl -X POST http://localhost:8081/api/v1/credit-validate/register \
+curl -X POST http://localhost:8080/api/v1/credit-validate/register \
   -H "Content-Type: application/json" \
   -d '{"cardId":10,"cpf":"000.000.000-00","address":"Av. Example, 123"}'
 ```

@@ -22,7 +22,7 @@ services:
     hostname: fintech-keycloak
     container_name: fintech-keycloak
     ports:
-      - "8080:8080"
+      - "8081:8080"
     environment:
       KC_BOOTSTRAP_ADMIN_USERNAME: admin
       KC_BOOTSTRAP_ADMIN_PASSWORD: admin
@@ -32,8 +32,8 @@ services:
     command:
       [
         "start-dev",
-        "--hostname=http://fintech-keycloak:8080",
-        "--hostname-admin=http://fintech-keycloak:8080",
+        "--hostname=http://fintech-keycloak:8081",
+        "--hostname-admin=http://fintech-keycloak:8081",
       ]
     networks:
       - fintech
@@ -100,7 +100,7 @@ services:
     hostname: fintech-api-gateway
     container_name: fintech-api-gateway
     ports:
-      - "8081:8081"
+      - "8080:8080"
     networks:
       - fintech
     depends_on:
