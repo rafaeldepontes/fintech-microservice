@@ -3,7 +3,7 @@ spring:
     name: "discover-server"
   security:
     user:
-      name: "custom-eureka-user"
+      name: "user"
       password: "password" # This should have a real password, but this is a POC so I will use a simpler one
 server:
   port: 8761
@@ -15,5 +15,4 @@ eureka:
     register-with-eureka: false
     fetch-registry: false
     service-url:
-      defaultZone: http://custom-eureka-user:password@localhost:8761/eureka/
-
+      defaultZone: http://user:password@localhost:8761/eureka
