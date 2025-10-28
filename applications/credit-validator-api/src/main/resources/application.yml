@@ -2,7 +2,7 @@ spring:
   application:
     name: "credit-validator-api"
   rabbitmq:
-    host: localhost
+    host: fintech-rabbitmq
     port: 5672
     username: user
     password: pass
@@ -15,21 +15,12 @@ server:
 eureka:
   client:
     service-url:
-      defaultZone: http://user:password@localhost:8761/eureka
+      defaultZone: http://user:password@fintech-eureka-server:8761/eureka
   instance:
     # Didn't know about this, but you can use ${} to get the spring
     # properties inside the application.yml or .properties
     # this is basically saying "credit-validator-api:123-456"
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-
-# Feign Client
-clients:
-  card:
-    service:
-      url: http://localhost:8080/api/v1/cards
-  client:
-    service:
-      url: http://localhost:8080/api/v1/clients
 
 mq:
   exchanges:

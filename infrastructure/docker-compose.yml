@@ -1,8 +1,8 @@
 services:
   rabbitmq:
     image: rabbitmq:3.10.5-management
-    hostname: rabbitmq
-    container_name: rabbitmq
+    hostname: fintech-rabbitmq
+    container_name: fintech-rabbitmq
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -14,18 +14,106 @@ services:
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq/mnesia/rabbitmq@my-rabbit
       - rabbitmq_log:/var/log/rabbitmq
+    networks:
+      - fintech
 
   keycloak:
     image: quay.io/keycloak/keycloak:latest
-    hostname: keycloak
-    container_name: keycloak
+    hostname: fintech-keycloak
+    container_name: fintech-keycloak
     ports:
-      - "8081:8080"
+      - "8080:8080"
     environment:
       KC_BOOTSTRAP_ADMIN_USERNAME: admin
       KC_BOOTSTRAP_ADMIN_PASSWORD: admin
-    command: ["start-dev"]
+      KC_HOSTNAME_STRICT: "false"
+      KC_HOSTNAME_STRICT_HTTPS: "false"
+      KC_PROXY: edge
+    command:
+      [
+        "start-dev",
+        "--hostname=http://fintech-keycloak:8080",
+        "--hostname-admin=http://fintech-keycloak:8080",
+      ]
+    networks:
+      - fintech
+
+  eureka-server:
+    build:
+      context: ../applications/eureka-server
+      dockerfile: Dockerfile
+    image: fintech-eureka-server
+    hostname: fintech-eureka-server
+    container_name: fintech-eureka-server
+    ports:
+      - "8761:8761"
+    networks:
+      - fintech
+
+  client-api:
+    build:
+      context: ../applications/client-api
+      dockerfile: Dockerfile
+    image: fintech-client-api
+    hostname: fintech-client-api
+    container_name: fintech-client-api
+    networks:
+      - fintech
+    depends_on:
+      - keycloak
+      - eureka-server
+      - rabbitmq
+
+  card-api:
+    build:
+      context: ../applications/card-api
+      dockerfile: Dockerfile
+    image: fintech-card-api
+    hostname: fintech-card-api
+    container_name: fintech-card-api
+    networks:
+      - fintech
+    depends_on:
+      - keycloak
+      - eureka-server
+      - rabbitmq
+
+  credit-validator-api:
+    build:
+      context: ../applications/credit-validator-api
+      dockerfile: Dockerfile
+    image: fintech-credit-validator-api
+    hostname: fintech-credit-validator-api
+    container_name: fintech-credit-validator-api
+    networks:
+      - fintech
+    depends_on:
+      - keycloak
+      - eureka-server
+      - rabbitmq
+
+  api-gateway:
+    build:
+      context: ../applications/api-gateway
+      dockerfile: Dockerfile
+    image: fintech-api-gateway
+    hostname: fintech-api-gateway
+    container_name: fintech-api-gateway
+    ports:
+      - "8081:8081"
+    networks:
+      - fintech
+    depends_on:
+      - keycloak
+      - eureka-server
+      - rabbitmq
+      - credit-validator-api
+      - card-api
+      - client-api
 
 volumes:
   rabbitmq_data:
   rabbitmq_log:
+
+networks:
+  fintech:
